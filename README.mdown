@@ -1,0 +1,37 @@
+# METEOR TODOAPP TUTORIAL
+## Creating your first app
+- Meteor默认支持ES6语法
+
+## Defining views with React components
+- `client/main.js`中的`Meteor.startup`用来放初始化代码, 当页面准备后会加载这些初始化代码
+- Meteor解析项目中的所有HTML文件, 并且识别三个顶层标签, `<head>`, `<body>`, `<template>`
+	1. `<head>`
+项目中所有`<head>`标签内的内容都会被添加到发送到client的HTML的head部分
+	2. `<body>`
+项目中所有`<body>`标签内的内容都会被添加到发送到client的HTML的body部分
+	3. `<template>`
+所有`<template>`的内容被解析为Meteor templates, 在HTML中, 可以使用`{{>templateName}}`来引用, 在JavaScript中, 可以使用`Template.templateName`来引用
+
+## Storing tasks in a collection
+- Collections是Meteor储存持久化数据的方式
+- 在Meteor中, client和server都可以使用Collections
+使编写业务逻辑变得简单而不需要写大量的server端代码
+- Collections会自动更新, 所以依赖这些Collections的view层组件也将自动呈现最新数据
+- 通过在JS中调用`MyCollection = new Mongo.Collection("my-collection");`来创建一个新的collection
+	- server
+在server端使用这个这个代码将建立一个叫做"my-collection"的MongoDB collection
+	- client
+在client端使用这个代码将建立一个链接到server端collection的缓存
+- Tutorial中数据放在`imports/api/task.js`中, 然后在server端的main.js中import这个数据
+在server端的main.js中import这个数据, 将会建立一个MongoDB的collection和建立一个client获取数据的管道
+
+### Using data from a collection inside a React component
+- 要在React组件中使用Meteor collection的数据, 我们需要安装一个Atmosphere(和NPM类似的包管理工具)包, `react-meteor-data`
+这个包可以让我们在React的组件层中创建一个'data container'去获取Meteor的响应式数据, 然后, 要使用`react-meteor-data`, 我们需要使用`createContainer`HOC, 把我们的组件包裹在一个container中
+- 在这个tutorial中, 包裹APP的HOC从Tasks collection中获取tasks数据并以props的形式传给App组件
+HOC以一种系响应式的方式做这件事, 所以当数据库的内容更新之后, App将重新渲染
+
+### Inserting tasks from the server-side database console
+- 在collections中的items称为documents
+
+## Adding tasks with a form
