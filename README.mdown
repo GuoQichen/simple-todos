@@ -36,7 +36,7 @@ HOC以一种系响应式的方式做这件事, 所以当数据库的内容更新
 - 可以使用`meteor mongo`进入数据库的控制台, 在控制台中可以使用mongo命令插入数据`db.tasks.insert({ text: "Hello world!", createdAt: new Date() });`
 
 ## Adding tasks with a form
-- 在App组件中可以对Tasks(Mongo.Collection)进行操作, 使用`Task.insert({ text: "hello world!", createdAt: new Date() })`
+- 在App组件中可以对Tasks(Mongo.Collection)进行操作, 使用`Tasks.insert({ text: "hello world!", createdAt: new Date() })`
 
 ### Listening for events in React
 - ReactDOM有一个API可以获取DOM节点, `ReactDOM.findDOMNode(this.refs.textInput)`
@@ -50,3 +50,29 @@ HOC以一种系响应式的方式做这件事, 所以当数据库的内容更新
 - 在包裹着App的data container中, 给find增加一个sort option对数据进行分类
 
 ## Checking off and deleting tasks
+- 在对Tasks进行update操作的时候, 可以动态的增加一个原本没有的属性checked, 这也是MongoDB的强大之处
+
+## Running your app on Android or iOS
+- 目前, Meteor在windows上不支持移动端的构建
+- Meteor的App被设计成能够跨平台运行的, 包括iOS和Android, website端应用转化成移动端应用只需要几个命令
+- 但是需要下载相应的构建工具, iOS则需要Xcode
+
+## Storing temporary UI data in component state
+- 这一节将使用React state实现client数据过滤功能
+- 因为MiniMongo的数据在client已经有缓存, 所以我们就算在container中增加获取count, 不会涉及服务器的任何东西
+
+## Adding user accounts
+- Meteor自带一个账户系统和插件登录的用户界面, 可以在几分钟内为App添加多用户功能
+- 当前Meteor用户登录界面使用的UI是Meteor的默认UI引擎Blaze, 未来可能使用特殊的React组件
+- 要使用账户系统, 需要添加相关的包, `meteor add accounts-ui accounts-password` 
+
+### Automatic accounts UI
+- 在我们的App中有`accounts-ui`这个包, 所以我们需要做得只是添加登录下拉列表包含的UI组件
+- 这个下拉列表将发现login methods和显示合适的控件, 在这个Tutorial中, 使用的login methods是`accounts-password`, 所以下拉列表显示password字段
+
+### Getting information about the logged-in user
+-  在data container, 可以使用`Meteor.user()`来检查是否有用户登录和获取用户的信息
+例如, `Meteor.user().username`包含登录用户的用户名, `Meteor.userId()`获得当前用户的`_id`, 这是Mongo中数据的唯一标识, 所以这也是用户的唯一标识	
+
+## Security with methods
+- 
