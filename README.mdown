@@ -33,5 +33,20 @@ HOC以一种系响应式的方式做这件事, 所以当数据库的内容更新
 
 ### Inserting tasks from the server-side database console
 - 在collections中的items称为documents
+- 可以使用`meteor mongo`进入数据库的控制台, 在控制台中可以使用mongo命令插入数据`db.tasks.insert({ text: "Hello world!", createdAt: new Date() });`
 
 ## Adding tasks with a form
+- 在App组件中可以对Tasks(Mongo.Collection)进行操作, 使用`Task.insert({ text: "hello world!", createdAt: new Date() })`
+
+### Listening for events in React
+- ReactDOM有一个API可以获取DOM节点, `ReactDOM.findDOMNode(this.refs.textInput)`
+
+### Inserting into a collection
+- 我们可以给task对象赋予任何属性, 所以我们不需要为collection定义一个schema
+这是因为, 在MongoDB中, Collection是动态模式(Dynamic Schema)
+- 但是从client无限制的直接向数据库插入任意数据是不安全的
+
+### Sorting our tasks
+- 在包裹着App的data container中, 给find增加一个sort option对数据进行分类
+
+## Checking off and deleting tasks
