@@ -75,4 +75,22 @@ HOC以一种系响应式的方式做这件事, 所以当数据库的内容更新
 例如, `Meteor.user().username`包含登录用户的用户名, `Meteor.userId()`获得当前用户的`_id`, 这是Mongo中数据的唯一标识, 所以这也是用户的唯一标识	
 
 ## Security with methods
-- 
+- 在这部分之前, 这个App的任何一个用户可以编辑数据库的任何一部分, 其实在实际的App中需要控制数据库的权限
+在Meteor中, 最好的实现方式是使用methods带代替直接操作数据库
+
+### Removing `insecure`
+- 每个刚创建的Meteor project都默认有insecure这个包, 这个包允许直接在client操作数据库, 是为了方便原型开发
+
+### Defining methods
+- method的定义, 在server端定义可以被client端远程调用的函数
+- 在method中, this值被绑定为调用这个方法的对象
+- 我们需要一个method来包括在client对数据库的各种操作, 这个method需要定义在client和server都可以执行的地方
+
+### Optimistic UI
+- 当我们在client使用`Meteor.call`的时候, 其实有两件事同时发生
+	1. client发送request到server在安全的环境下运行method, 就像AJAX请求一样
+	2. method直接运行在client的模拟环境来预测server端结果的输入
+
+这意味着, 创建一个最新的任务实际上在结果返回之前已经出现在屏幕上了, 如果client模拟的结果和server返回的结果是一致的, 那么一切就不变, 如果返回的结果和模拟的结果不同, 那么UI会按照server实际返回的状态来打补丁
+
+## Filtering data with publish and subscribe
