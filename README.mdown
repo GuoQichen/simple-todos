@@ -96,3 +96,6 @@ HOC以一种系响应式的方式做这件事, 所以当数据库的内容更新
 ## Filtering data with publish and subscribe
 - publish和subscribe可以用来控制Meteor将发送什么数据到client的数据库, `Meteor.publish`, `Meteor.subscribe`
 - 和`insecure`一样, 新的Meteor App默认带有`autopublish`这个包, 这个包可以自动同步所有数据库的内容到client
+
+## just for submodule demonstration
+- hello
